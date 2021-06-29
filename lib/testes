@@ -1,0 +1,50 @@
+var phone = typeof(data.payload.phone) == 'string' && data.payload.phone.trim().length == 12 ? data.payload.phone.trim() : false;
+
+    // Check for optional fields
+    var firstName = typeof(data.payload.firstName) == 'string' && data.payload.firstName.trim().length > 0 ? data.payload.firstName.trim() : false;
+    var lastName = typeof(data.payload.lastName) == 'string' && data.payload.lastName.trim().length > 0 ? data.payload.lastName.trim() : false;
+    var password = typeof(data.payload.password) == 'string' && data.payload.password.trim().length > 0 ? data.payload.password.trim() : false;
+    var newPass =  typeof(data.payload.newPass) == 'string' && data.payload.newPass.trim().length > 0 ? data.payload.newPass.trim() : false;
+    if (phone  != ''){
+        if (firstName ||lastName ||password){
+            _data.read('users', phone, function(err,userData){
+                if (!err &&userData){
+                    var hashPassword = helpers.hash(password);
+                    if(userData.password == hashPassword){
+                        if(firstName ||lastName ||newPass){
+                            if (firstName){
+                                userData.firstName = firstName
+                            };
+                            if(lastName){
+                                userData.lastName = lastName;
+                            }
+                            if(newPass){
+                                userData.password = newPass;
+                            }
+                            _data.update ('users', phone, userData , function(err){
+                                if(!err){
+                                    callback(200);
+                                }else{
+                                    callback(500, {'error' : 'error update data'})
+                                }
+                            })
+
+                        }else{
+                            callback(400, {'error' : "Missing require field"})
+                        }
+
+                    }else{
+                        callback (400, {'error' : 'password is wrong'})
+                    }
+                }else {
+                    callback(400, {'error' : "Missing password"})
+                }
+            })
+
+        }else {
+            callback(400 , {'error' : "data false"})
+        }
+
+    }else {
+        callback(400 , {'error' : "Phone not found"})
+    }

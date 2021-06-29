@@ -1,0 +1,12 @@
+{"list":
+    [
+        {"id":1,"name":"Ayam betutu","price":3.5},
+        {"id":2,"name":"Ayam goreng","price":2.1},
+        {"id":3,"name":"Ayam bakar","price":2.2},
+        {"id":4,"name":"Ayam madu","price":2.4},
+        {"id":5,"name":"Ayam kecap","price":2.7},
+        {"id":6,"name":"Ayam bekakak","price":2.8},
+        {"id":7,"name":"Ayam panggang","price":2.9},
+        {"id":8,"name":"Ayam bbq","price":3.1}
+    ]
+}
